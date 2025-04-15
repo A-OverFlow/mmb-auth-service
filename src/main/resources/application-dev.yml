@@ -1,0 +1,55 @@
+server:
+  port: 8110
+
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  application:
+    name: auth-service
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/aof?serverTimezone=Asia/Seoul
+    username: root
+    password: root1234
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show-sql: true
+        format_sql: true
+        default_batch_fetch_size: 1000
+    open-in-view: false
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope: profile, email
+
+  data:
+    redis:
+      host: {REDIS_HOST}
+      port: {REDIS_PORT}
+
+common:
+  service:
+    member:
+      host: {MEMBER_SERVICE_HOST}
+      port: {MEMBER_SERVICE_PORT}
+
+jwt:
+  secret : 9cd1de305ba49cd1c5bd1e3d626ddd0eadabcc4316948e808782025b65cc36ee
+  access-token-expire-time : 300
+  refresh-token-expire-time : 7200
+
+logging:
+  level:
+    org.hibernate.SQL: debug

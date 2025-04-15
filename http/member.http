@@ -1,0 +1,12 @@
+### 회원조회 요청
+GET http://localhost:8110/api/v1/member/1
+Content-Type: application/json
+
+### 회원가입 요청
+POST http://localhost:8110/api/v1/member
+Content-Type: application/json
+
+{
+  "username": "joonsub.lim",
+  "email": "joonsub.lim@ahnlab.com"
+}

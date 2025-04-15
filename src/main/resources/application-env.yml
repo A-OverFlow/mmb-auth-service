@@ -1,0 +1,35 @@
+server:
+  port: {MEMBER_SERVICE_PORT}
+
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  application:
+    name: {MEMBER_SERVICE_NAME}
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: {MYSQL_URL}
+    username: {MYSQL_USERNAME}
+    password: {MYSQL_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show-sql: true
+        format_sql: true
+        default_batch_fetch_size: 1000
+    open-in-view: false
+
+jwt:
+  secret : {SECRET}
+  access-token-expire-time : {ACCESS_TOKEN_EXPIRE_TIME}
+  refresh-token-expire-time : {REFRESH_TOKEN_EXPIRE_TIME}
+
+logging:
+  level:
+    org.hibernate.SQL: debug
