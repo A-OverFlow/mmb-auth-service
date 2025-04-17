@@ -2,13 +2,16 @@ package com.example.auth_service.member.service
 
 import com.example.auth_service.member.dto.MemberDto
 import com.example.auth_service.member.dto.request.MemberCreateRequest
+import lombok.extern.slf4j.Slf4j
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.reactive.function.client.WebClientResponseException
 import reactor.core.publisher.Mono
 
+@Slf4j
 @Service
 class MemberService(
     private val webClient: WebClient,
@@ -20,15 +23,24 @@ class MemberService(
         return try {
             webClient.get()
                 .uri { uriBuilder ->
-                    uriBuilder.path("http://${host}:${port}/api/v1/members/check")
+                    uriBuilder.path("/api/v1/members")
                         .queryParam("email", email)
                         .build()
                 }
                 .retrieve()
                 .onStatus({ it == HttpStatus.NOT_FOUND }) {
-                    Mono.empty()
+                    Mono.error(WebClientResponseException.create(
+                        HttpStatus.NOT_FOUND.value(),
+                        "Not Found",
+                        HttpHeaders.EMPTY,
+                        ByteArray(0),
+                        null
+                    ))
                 }
                 .bodyToMono(MemberDto::class.java)
+                .onErrorResume(WebClientResponseException.NotFound::class.java) {
+                    Mono.empty() // 여기서 실제로 null 반환
+                }
                 .block()
         } catch (e: WebClientResponseException.NotFound) {
             null
