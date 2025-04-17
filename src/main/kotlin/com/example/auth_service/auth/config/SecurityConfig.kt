@@ -23,12 +23,13 @@ class SecurityConfig(
         http
             .csrf { it.disable() }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
-            .exceptionHandling { it.authenticationEntryPoint(jwtAuthenticationEntryPoint) }
+//            .exceptionHandling { it.authenticationEntryPoint(jwtAuthenticationEntryPoint) }
             .authorizeHttpRequests {
                 it
                     .requestMatchers(
                         "/api/v1/auth/signup",
                         "/api/v1/auth/validate",
+                        "/api/v1/auth/reissue",
                         "/api/v1/auth/login"
                     ).permitAll()
                     .anyRequest().authenticated()
