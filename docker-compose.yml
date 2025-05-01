@@ -1,19 +1,27 @@
-version: '3.8'
 services:
   auth-service:
-    build:
-      dockerfile: ./Dockerfile
-    container_name: mmb-auth-service
+    image: ${DOCKER_IMAGE}:dev
+    container_name: ${AUTH_SERVICE_NAME}
     ports:
-      - 8080:${AUTH_SERVICE_PORT}
-    environment:
-      AUTH_SERVICE_NAME: ${AUTH_SERVICE_NAME}
-      REDIS_HOST: ${REDIS_HOST}
-      REDIS_PORT: ${REDIS_PORT}
-      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
-      SECRET_KEY: ${SECRET_KEY}
-      ACCESS_TOKEN_EXPIRATION: ${ACCESS_TOKEN_EXPIRATION}
-      REFRESH_TOKEN_EXPIRATION: ${REFRESH_TOKEN_EXPIRATION}
-      MEMBER_SERVICE_HOST: ${MEMBER_SERVICE_HOST}
-      MEMBER_SERVICE_PORT: ${MEMBER_SERVICE_PORT}
-    #    restart: always
+      - "${AUTH_SERVICE_PORT}:${AUTH_SERVICE_PORT}"
+    env_file:
+      - .env
+    networks:
+      - mumulbo-network
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:7.2-alpine
+    container_name: ${AUTH_SERVICE_NAME}-redis
+    ports:
+      - "${REDIS_PORT}:6379"
+    networks:
+      - mumulbo-network
+    restart: unless-stopped
+
+networks:
+  mumulbo-network:
+    external: true
+    driver: bridge
+    name: ${MMB_DOCKER_NETWORK}

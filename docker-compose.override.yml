@@ -1,0 +1,7 @@
+# docker compose up -d --build
+services:
+  auth-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image:  ${DOCKER_IMAGE}:local

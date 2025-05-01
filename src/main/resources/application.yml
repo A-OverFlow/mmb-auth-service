@@ -11,12 +11,13 @@ spring:
         registration:
           google:
             client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             scope: profile, email
 
   data:
     redis:
-      host: ${REDIS_URL}
+      host: ${REDIS_HOST}
       port: ${REDIS_PORT}
 
 common:
@@ -26,9 +27,9 @@ common:
       port: ${MEMBER_SERVICE_PORT}
 
 jwt:
-  secret : ${SECRET_KEY}
-  access-token-expire-time : ${ACCESS_TOKEN_EXPIRATION}
-  refresh-token-expire-time : ${REFRESH_TOKEN_EXPIRATION}
+  secret: ${JWT_SECRET_KEY}
+  access-token-expire-time: ${ACCESS_TOKEN_EXPIRATION}
+  refresh-token-expire-time: ${REFRESH_TOKEN_EXPIRATION}
 
 logging:
   level:
