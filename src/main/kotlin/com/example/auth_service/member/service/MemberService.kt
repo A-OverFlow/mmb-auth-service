@@ -2,6 +2,7 @@ package com.example.auth_service.member.service
 
 import com.example.auth_service.member.dto.MemberDto
 import com.example.auth_service.member.dto.request.MemberCreateRequest
+import com.example.auth_service.member.dto.response.MemberCreateResponse
 import lombok.extern.slf4j.Slf4j
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpHeaders
@@ -55,15 +56,12 @@ class MemberService(
             .block()
     }
 
-    fun createMember(request: MemberCreateRequest): MemberDto {
+    fun createMember(request: MemberCreateRequest): MemberCreateResponse {
         return webClient.post()
             .uri("http://${host}:${port}/api/v1/members")
             .bodyValue(request)
             .retrieve()
-            .onStatus({ it == HttpStatus.NOT_FOUND }) {
-                Mono.empty()
-            }
-            .bodyToMono(MemberDto::class.java)
+            .bodyToMono(MemberCreateResponse::class.java)
             .block()!!
     }
 

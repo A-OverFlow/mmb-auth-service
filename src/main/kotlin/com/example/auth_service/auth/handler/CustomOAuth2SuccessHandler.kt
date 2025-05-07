@@ -22,8 +22,9 @@ class CustomOAuth2SuccessHandler(
         authentication: Authentication
     ) {
         val principal = authentication.principal as CustomOAuth2User
-        val accessToken = jwtTokenProvider.createAccessToken(principal.email)
-        val refreshToken = jwtTokenProvider.createRefreshToken(principal.email)
+        val id = principal.attributes["id"] as Long
+        val accessToken = jwtTokenProvider.createAccessToken(id)
+        val refreshToken = jwtTokenProvider.createRefreshToken(id)
         val responseBody = TokenResponse(accessToken, refreshToken)
 
         response.contentType = "application/json"

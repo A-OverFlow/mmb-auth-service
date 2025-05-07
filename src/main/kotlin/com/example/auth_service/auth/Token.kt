@@ -7,7 +7,7 @@ import org.springframework.data.redis.core.RedisHash
 class Token(
 
     @Id
-    val email: String,
+    val id: Long,
 
     var refreshToken: String
 ) {

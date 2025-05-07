@@ -39,8 +39,8 @@ class JwtAuthenticationFilter(
         val token = resolveToken(request) ?: throw CustomException(ErrorCode.UNAUTHORIZED)
 
         if (jwtTokenProvider.validateToken(token)) {
-            val email = jwtTokenProvider.getEmail(token)
-            val userDetails = userDetailsService.loadUserByUsername(email)
+            val id = jwtTokenProvider.getId(token)
+            val userDetails = userDetailsService.loadUserByUsername("$id")
             val auth = UsernamePasswordAuthenticationToken(userDetails, null, userDetails.authorities)
             SecurityContextHolder.getContext().authentication = auth
         } else {
