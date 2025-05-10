@@ -6,13 +6,15 @@ class MemberCreateRequest(
     val provider: String,
     val providerId: String,
     val name: String,
-    val email: String
+    val email: String,
+    val profile: String
 ) {
     constructor(oAuth2UserAttributes: Map<String, Any>) : this(
         provider = "GOOGLE",
         providerId = oAuth2UserAttributes["sub"] as String,
         name = oAuth2UserAttributes["name"] as String,
-        email = oAuth2UserAttributes["email"] as String
+        email = oAuth2UserAttributes["email"] as String,
+        profile = oAuth2UserAttributes["picture"] as String
     )
 
     companion object {
@@ -23,6 +25,7 @@ class MemberCreateRequest(
                 providerId = googleUser.providerId,
                 name = googleUser.name,
                 email = googleUser.email,
+                profile = googleUser.profile
             )
         }
     }

@@ -4,5 +4,6 @@ data class GoogleUserDto(
     val provider: String,
     val providerId: String,
     val email: String,
-    val name: String
+    val name: String,
+    val profile: String
 )

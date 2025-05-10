@@ -27,9 +27,9 @@ common:
       port: ${MEMBER_SERVICE_PORT:8082}
 
 jwt:
-  secret: ${JWT_SECRET_KEY}
-  access-token-expire-time: ${ACCESS_TOKEN_EXPIRATION:3600000}
-  refresh-token-expire-time: ${REFRESH_TOKEN_EXPIRATION:604800000}
+  secret: ${JWT_SECRET_KEY:mGIP1HLVfEFZCqnyB+JrVaL1R5UcN15YuMB51MoxKzQ=}
+  access-token-expire-time: ${ACCESS_TOKEN_EXPIRATION:1800000}
+  refresh-token-expire-time: ${REFRESH_TOKEN_EXPIRATION:1209600000}
 
 logging:
   level:
