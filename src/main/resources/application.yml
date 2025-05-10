@@ -1,9 +1,9 @@
 server:
-  port: ${AUTH_SERVICE_PORT}
+  port: ${AUTH_SERVICE_PORT:8081}
 
 spring:
   application:
-    name: ${AUTH_SERVICE_NAME}
+    name: ${AUTH_SERVICE_NAME:mmb-auth-service}
 
   security:
     oauth2:
@@ -17,19 +17,19 @@ spring:
 
   data:
     redis:
-      host: ${REDIS_HOST}
-      port: ${REDIS_PORT}
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
 
 common:
   service:
     member:
-      host: ${MEMBER_SERVICE_HOST}
-      port: ${MEMBER_SERVICE_PORT}
+      host: ${MEMBER_SERVICE_HOST:localhost}
+      port: ${MEMBER_SERVICE_PORT:8082}
 
 jwt:
-  secret: ${JWT_SECRET_KEY}
-  access-token-expire-time: ${ACCESS_TOKEN_EXPIRATION}
-  refresh-token-expire-time: ${REFRESH_TOKEN_EXPIRATION}
+  secret: ${JWT_SECRET_KEY:mGIP1HLVfEFZCqnyB+JrVaL1R5UcN15YuMB51MoxKzQ=}
+  access-token-expire-time: ${ACCESS_TOKEN_EXPIRATION:1800000}
+  refresh-token-expire-time: ${REFRESH_TOKEN_EXPIRATION:1209600000}
 
 logging:
   level:

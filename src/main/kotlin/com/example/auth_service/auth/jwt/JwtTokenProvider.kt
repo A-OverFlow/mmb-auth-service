@@ -2,9 +2,9 @@ package com.example.auth_service.auth.jwt
 
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
+import java.util.Date
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
-import java.util.*
 
 @Component
 class JwtTokenProvider(
@@ -12,11 +12,11 @@ class JwtTokenProvider(
     @Value("\${jwt.access-token-expire-time}") private val accessTokenExpiration: Long,
     @Value("\${jwt.refresh-token-expire-time}") private val refreshTokenExpiration: Long,
 ) {
-    fun createAccessToken(email: String): String = createToken(email, accessTokenExpiration)
-    fun createRefreshToken(email: String): String = createToken(email, refreshTokenExpiration)
+    fun createAccessToken(id: Long): String = createToken(id, accessTokenExpiration)
+    fun createRefreshToken(id: Long): String = createToken(id, refreshTokenExpiration)
 
-    private fun createToken(email: String, expired: Long): String {
-        val claims = Jwts.claims().setSubject(email)
+    private fun createToken(id: Long, expired: Long): String {
+        val claims = Jwts.claims().setSubject("$id")
         val now = Date()
         val validity = Date(now.time + expired)
 
@@ -28,11 +28,11 @@ class JwtTokenProvider(
             .compact()
     }
 
-    fun getEmail(token: String): String =
+    fun getId(token: String): Long =
         Jwts.parserBuilder().setSigningKey(secretKey).build()
             .parseClaimsJws(token)
             .body
-            .subject
+            .subject.toLong()
 
     fun validateToken(token: String): Boolean {
         return try {
