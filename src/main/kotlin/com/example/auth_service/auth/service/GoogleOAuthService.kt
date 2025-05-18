@@ -32,7 +32,7 @@ class GoogleOAuthService(
                 providerId = payload["sub"] as String,
                 email = payload["email"] as String,
                 name = payload["name"] as String,
-                profile = payload["picture"] as String
+                picture = payload["picture"] as String
             )
         } catch (e: Exception) {
             throw CustomException(ErrorCode.INVALID_GOOGLE_ID_TOKEN)
