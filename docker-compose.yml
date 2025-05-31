@@ -1,6 +1,6 @@
 services:
   auth-service:
-    image: ${DOCKER_IMAGE}:dev
+    image: ${DOCKER_IMAGE}:IMAGE_TAG_PLACEHOLDER
     container_name: ${AUTH_SERVICE_NAME}
     ports:
       - "${AUTH_SERVICE_PORT}:${AUTH_SERVICE_PORT}"
@@ -10,6 +10,11 @@ services:
       - mumulbo-network
     depends_on:
       - redis
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
 
   redis:
     image: redis:7.2-alpine
