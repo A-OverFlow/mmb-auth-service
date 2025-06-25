@@ -11,10 +11,10 @@ services:
     depends_on:
       - redis
     logging:
-      driver: json-file
-      options:
-        max-size: "10m"
-        max-file: "5"
+        driver: fluentd
+        options:
+            fluentd-address: localhost:24224
+            tag: mmb-auth-service
 
   redis:
     image: redis:7.2-alpine
